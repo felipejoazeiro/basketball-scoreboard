@@ -17,6 +17,9 @@ class ScoreboardController extends GetxController {
   var seconds = 10.obs;
   var isRunning = false.obs;
 
+  var configMinutes = 10.obs;
+  var configSeconds = 10.obs;
+
   var popUp = CardsTypes.none.obs;
 
   Timer? _timer;
@@ -26,6 +29,8 @@ class ScoreboardController extends GetxController {
   void configClock() {
     minutes.value = startMinutes.value;
     seconds.value = startSeconds.value;
+    configMinutes.value = startMinutes.value;
+    configSeconds.value = startSeconds.value;
   }
 
   void addFirstTeamPoints() {
@@ -137,6 +142,14 @@ class ScoreboardController extends GetxController {
 
   void openPopup(CardsTypes card) {
     popUp.value = card;
+  }
+
+  void changeTiming() {
+    startMinutes.value = configMinutes.value;
+    startSeconds.value = configSeconds.value;
+
+    minutes.value = configMinutes.value;
+    seconds.value = configSeconds.value;
   }
 
   @override
