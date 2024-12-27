@@ -64,6 +64,8 @@ flutter:
     - assets/images/background.png
     - assets/images/card_image.png
     - assets/images/config_logo.png
+    - assets/sounds/basketball-whistle.mp3
+    - assets/sounds/defense-nba.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

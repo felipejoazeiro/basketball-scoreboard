@@ -98,6 +98,13 @@ class HomePage extends StatelessWidget {
                       ),
                       Column(
                         children: [
+                          InkWell(
+                            onTap: scoreController.tradeTeams,
+                            child: Icon(
+                              Icons.compare_arrows,
+                              color: Colors.white,
+                            ),
+                          ),
                           Text(
                             'TEMPO',
                             style: TextStyle(color: Colors.white, fontSize: 32),

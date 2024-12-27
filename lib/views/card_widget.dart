@@ -16,11 +16,11 @@ class CardWidget extends StatelessWidget {
       case CardsTypes.teams:
         return teamsCard(controller);
       case CardsTypes.timing:
-        return timingCard();
+        return timingCard(controller);
     }
   }
 
-  Widget teamsCard(ScoreboardController controller) {
+  Widget timingCard(ScoreboardController controller) {
     return Obx(() {
       return Card(
           color: const Color.fromRGBO(48, 31, 76, 1),
@@ -212,11 +212,13 @@ class CardWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Center(
-                            child: Text(
-                          'SALVAR',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        )),
+                          child: Text(
+                            'SALVAR',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -227,7 +229,124 @@ class CardWidget extends StatelessWidget {
     });
   }
 
-  Widget timingCard() {
-    return Container();
+  Widget teamsCard(ScoreboardController controller) {
+    final TextEditingController firstTeamController = TextEditingController();
+    final TextEditingController secondTeamController = TextEditingController();
+    return Obx(() {
+      return Card(
+        color: const Color.fromRGBO(48, 31, 76, 1),
+        child: SingleChildScrollView(
+          child: Container(
+            width: 350,
+            height: 300,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white,
+                width: 6,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8),
+                      child: InkWell(
+                        onTap: () => controller.openPopup(CardsTypes.none),
+                        child: Icon(
+                          Icons.close_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: firstTeamController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            hintText: controller.firstTeam.value.name,
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: secondTeamController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            hintText: controller.secondTeam.value.name,
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                      child: Image.asset(
+                        'assets/images/config_logo.png',
+                        width: 150,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        String firstName = firstTeamController.text;
+                        String secondName = secondTeamController.text;
+
+                        controller.changeTeamsNames(firstName, secondName);
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'SALVAR',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

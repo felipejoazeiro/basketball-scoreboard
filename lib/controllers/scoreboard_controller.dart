@@ -41,7 +41,9 @@ class ScoreboardController extends GetxController {
 
   void removeFirstTeamPoints() {
     firstTeam.update((team) {
-      team?.points--;
+      if (team!.points > 0) {
+        team.points--;
+      }
     });
   }
 
@@ -53,7 +55,9 @@ class ScoreboardController extends GetxController {
 
   void removeSecondTeamPoints() {
     secondTeam.update((team) {
-      team?.points--;
+      if (team!.points > 0) {
+        team.points--;
+      }
     });
   }
 
@@ -85,14 +89,14 @@ class ScoreboardController extends GetxController {
           minutes.value--;
           seconds.value = 59;
         } else {
-          // TODO tocar som final
+          _audioPlayer.play(AssetSource('sounds/basketball-whistle.mp3'));
           pauseCron();
         }
       } else {
         seconds.value--;
       }
       if (minutes.value == 1 && seconds.value == 0) {
-        //TODO Tocar som de um minuto
+        _audioPlayer.play(AssetSource('sounds/defense-nba.mp3'));
       }
     });
   }
@@ -150,6 +154,35 @@ class ScoreboardController extends GetxController {
 
     minutes.value = configMinutes.value;
     seconds.value = configSeconds.value;
+  }
+
+  void changeTeamsNames(String firstName, String secondName) {
+    if (firstName.isNotEmpty) {
+      firstTeam.update((team) {
+        team?.name = firstName;
+      });
+    }
+
+    if (secondName.isNotEmpty) {
+      secondTeam.update((team) {
+        team?.name = secondName;
+      });
+    }
+  }
+
+  tradeTeams() {
+    var team1 = firstTeam.value.copyWith();
+    var team2 = secondTeam.value.copyWith();
+
+    firstTeam.update((team) {
+      team?.name = team2.name;
+      team?.points = team2.points;
+    });
+
+    secondTeam.update((team) {
+      team?.name = team1.name;
+      team?.points = team1.points;
+    });
   }
 
   @override
