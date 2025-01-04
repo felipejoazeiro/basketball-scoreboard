@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:basketball_scoreboard/controllers/scoreboard_controller.dart';
 import 'package:basketball_scoreboard/models/cards_model.dart';
 import 'package:basketball_scoreboard/views/card_widget.dart';
@@ -10,6 +11,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scoreController = Get.put(ScoreboardController());
+
+    final AudioPlayer _audioPlayer = AudioPlayer();
 
     scoreController.configClock();
     return Scaffold(
@@ -70,12 +73,18 @@ class HomePage extends StatelessWidget {
                             style: TextStyle(color: Colors.white, fontSize: 48),
                           ),
                           InkWell(
-                            onTap: () => scoreController.addFirstTeamPoints(),
+                            splashFactory: NoSplash.splashFactory,
+                            enableFeedback: false,
+                            onTap: () async {
+                              await _audioPlayer
+                                  .play(AssetSource('sounds/point.mp3'));
+                              scoreController.addFirstTeamPoints();
+                            },
                             onLongPress: () =>
                                 scoreController.removeFirstTeamPoints(),
                             child: Container(
-                              width: 250,
-                              height: 155,
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: MediaQuery.of(context).size.height * 0.4,
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(15),
@@ -110,12 +119,16 @@ class HomePage extends StatelessWidget {
                             style: TextStyle(color: Colors.white, fontSize: 32),
                           ),
                           InkWell(
-                            onTap: () => scoreController.playCronom(),
+                            enableFeedback: false,
+                            splashFactory: NoSplash.splashFactory,
+                            onTap: () async {
+                              scoreController.playCronom();
+                            },
                             onLongPress: () =>
                                 scoreController.removeSecondTeamPoints(),
                             child: Container(
-                              width: 280,
-                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: MediaQuery.of(context).size.height * 0.2,
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(15),
@@ -142,12 +155,18 @@ class HomePage extends StatelessWidget {
                             style: TextStyle(color: Colors.white, fontSize: 48),
                           ),
                           InkWell(
-                            onTap: () => scoreController.addSecondTeamPoints(),
+                            splashFactory: NoSplash.splashFactory,
+                            enableFeedback: false,
+                            onTap: () async {
+                              await _audioPlayer
+                                  .play(AssetSource('sounds/point.mp3'));
+                              scoreController.addSecondTeamPoints();
+                            },
                             onLongPress: () =>
                                 scoreController.removeSecondTeamPoints(),
                             child: Container(
-                              width: 250,
-                              height: 155,
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: MediaQuery.of(context).size.height * 0.4,
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(15),
